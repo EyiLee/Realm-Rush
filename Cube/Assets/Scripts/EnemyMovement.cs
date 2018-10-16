@@ -12,10 +12,6 @@ public class EnemyMovement : MonoBehaviour {
         print("Hey I'm back at Start");
     }
 
-    private void Update () {
-
-    }
-
     private IEnumerator FollowPath () {
         print("Starting patrol...");
         foreach (Waypoint waypoint in path) {
