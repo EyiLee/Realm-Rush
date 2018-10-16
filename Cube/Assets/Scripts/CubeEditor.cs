@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class CubeEditor : MonoBehaviour {
 
-    [SerializeField] [Range(1f, 20f)] private float gridSize = 1f;
+    private float gridSize = 11f;
 
     TextMesh textMesh;
 
@@ -20,6 +20,6 @@ public class CubeEditor : MonoBehaviour {
 
         transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
 
-        textMesh.text = snapPos.x + "," + snapPos.z;
+        textMesh.text = snapPos.x / gridSize + "," + snapPos.z / gridSize;
     }
 }
