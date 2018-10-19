@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
-    [SerializeField] private List<Waypoint> path;
+    private List<Waypoint> path;
 
     private void Start () {
+        PathFinder pathFinder = FindObjectOfType<PathFinder>();
+        path = pathFinder.GetPath();
         StartCoroutine(FollowPath());
-        print("Hey I'm back at Start");
     }
 
     private IEnumerator FollowPath () {
