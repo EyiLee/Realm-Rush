@@ -5,41 +5,27 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour {
 
-    Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
-    Queue<Waypoint> queue = new Queue<Waypoint>();
-    bool isRunning = true;
-    Waypoint searchCenter;
+    private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+    private Queue<Waypoint> queue = new Queue<Waypoint>();
+    private List<Waypoint> path = new List<Waypoint>();
+    private bool isRunning = true;
+    private Waypoint searchCenter;
 
-    public List<Waypoint> path = new List<Waypoint>();
+    [SerializeField] private Waypoint startWaypoint;
+    [SerializeField] private Waypoint endWaypoint;
 
-    [SerializeField] private Waypoint startWaypoint, endWaypoint;
-
-    public List<Waypoint> GetPath () {
-        LoadBlocks();
-        ColorStartAndEnd();
-        BreadthFirstSearch();
-        CreatePath();
-        return path;
-    }
-
-    private Vector2Int[] directions = {
+    private readonly Vector2Int[] directions = {
         Vector2Int.up,
         Vector2Int.right,
         Vector2Int.down,
         Vector2Int.left
     };
 
-    private void CreatePath () {
-        path.Add(endWaypoint);
-
-        Waypoint previous = endWaypoint.exploredFrom;
-        while (previous != startWaypoint) {
-            path.Add(previous);
-            previous = previous.exploredFrom;
-        }
-
-        path.Add(startWaypoint);
-        path.Reverse();
+    public List<Waypoint> GetPath () {
+        LoadBlocks();
+        BreadthFirstSearch();
+        CreatePath();
+        return path;
     }
 
     private void LoadBlocks () {
@@ -50,14 +36,8 @@ public class PathFinder : MonoBehaviour {
                 Debug.LogWarning("Overlapping block " + waypoint);
             } else {
                 grid.Add(gridPos, waypoint);
-                waypoint.SetTopColor(Color.gray);
             }
         }
-    }
-
-    private void ColorStartAndEnd () {
-        startWaypoint.SetTopColor(Color.green);
-        endWaypoint.SetTopColor(Color.red);
     }
 
     private void BreadthFirstSearch () {
@@ -96,5 +76,18 @@ public class PathFinder : MonoBehaviour {
             queue.Enqueue(neighbor);
             neighbor.exploredFrom = searchCenter;
         }
+    }
+
+    private void CreatePath () {
+        path.Add(endWaypoint);
+
+        Waypoint previous = endWaypoint.exploredFrom;
+        while (previous != startWaypoint) {
+            path.Add(previous);
+            previous = previous.exploredFrom;
+        }
+
+        path.Add(startWaypoint);
+        path.Reverse();
     }
 }
