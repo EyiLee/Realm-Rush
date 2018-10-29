@@ -7,7 +7,7 @@ public class PathFinder : MonoBehaviour {
 
     private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     private Queue<Waypoint> queue = new Queue<Waypoint>();
-    private List<Waypoint> path = new List<Waypoint>();
+    private List<Waypoint> path;
     private bool isRunning = true;
     private Waypoint searchCenter;
 
@@ -22,9 +22,12 @@ public class PathFinder : MonoBehaviour {
     };
 
     public List<Waypoint> GetPath () {
-        LoadBlocks();
-        BreadthFirstSearch();
-        CreatePath();
+        if (path == null) {
+            path = new List<Waypoint>();
+            LoadBlocks();
+            BreadthFirstSearch();
+            CreatePath();
+        }
         return path;
     }
 
