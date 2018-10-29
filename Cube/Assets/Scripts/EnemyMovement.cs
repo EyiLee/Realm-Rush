@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
-    private List<Waypoint> path;
-
     private void Start () {
         PathFinder pathFinder = FindObjectOfType<PathFinder>();
-        path = pathFinder.GetPath();
-        StartCoroutine(FollowPath());
+        List<Waypoint> path = pathFinder.GetPath();
+        StartCoroutine(FollowPath(path));
     }
 
-    private IEnumerator FollowPath () {
+    private IEnumerator FollowPath (List<Waypoint> path) {
         foreach (Waypoint waypoint in path) {
             transform.position = waypoint.transform.position;
             yield return new WaitForSeconds(2f);

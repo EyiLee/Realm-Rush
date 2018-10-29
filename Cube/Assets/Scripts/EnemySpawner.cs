@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-    [SerializeField] float secondsBetweenSpawns = 4f;
-    [SerializeField] int spawnsNumber = 10;
+    [SerializeField] int spawnsNum = 10;
+    [SerializeField] float spawnsPeriod = 4f;
     [SerializeField] GameObject enemyPrefab;
 
-    private void Start () {
+    void Start () {
         StartCoroutine(RepeatlySpwanEnemies());
     }
 
-    private IEnumerator RepeatlySpwanEnemies () {
-        for (int i = 0; i < spawnsNumber; i++) {
-            Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform.parent);
-            yield return new WaitForSeconds(secondsBetweenSpawns);
+    IEnumerator RepeatlySpwanEnemies () {
+        for (int i = 0; i < spawnsNum; i++) {
+            Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
+            yield return new WaitForSeconds(spawnsPeriod);
         }
     }
 }
