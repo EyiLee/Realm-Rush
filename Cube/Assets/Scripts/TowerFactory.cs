@@ -6,11 +6,13 @@ public class TowerFactory : MonoBehaviour {
 
     [SerializeField] int towerLimit = 5;
     [SerializeField] Tower towerPrefab;
+    [SerializeField] Transform towerParentTransform;
 
     int towerNum = 0;
+    Queue<Tower> towerQueue = new Queue<Tower>();
 
     public void AddTower (TowerBase towerBase) {
-        towerNum = GetComponentsInChildren<Tower>().Length;
+        towerNum = towerQueue.Count;
 
         if (towerNum < towerLimit) {
             CreateTower(towerBase);
@@ -20,11 +22,22 @@ public class TowerFactory : MonoBehaviour {
     }
 
     void CreateTower (TowerBase towerBase) {
-        Instantiate(towerPrefab, towerBase.transform.position, Quaternion.identity, towerBase.transform.parent);
         towerBase.isPlaceable = false;
+
+        Tower newTower = Instantiate(towerPrefab, towerBase.transform.position, Quaternion.identity, towerParentTransform);
+        newTower.towerBase = towerBase;
+
+        towerQueue.Enqueue(newTower);
     }
 
     void MoveTower (TowerBase towerBase) {
-        Debug.Log("Max Towers reached");
+        towerBase.isPlaceable = false;
+
+        Tower oldTower = towerQueue.Dequeue();
+        oldTower.towerBase.isPlaceable = true;
+        oldTower.towerBase = towerBase;
+        oldTower.transform.position = towerBase.transform.position;
+
+        towerQueue.Enqueue(oldTower);
     }
 }

@@ -244,6 +244,7 @@ MonoBehaviour:
   objectToPan: {fileID: 4180577507780236}
   attackRange: 30
   projectileParticle: {fileID: 198990484881688956}
+  towerBase: {fileID: 0}
 --- !u!198 &198990484881688956
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -376,7 +377,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 200
       minScalar: 5
       maxCurve:
         serializedVersion: 2

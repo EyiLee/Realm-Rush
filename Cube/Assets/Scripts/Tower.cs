@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
-    [SerializeField] private Transform objectToPan;
+    [SerializeField] Transform objectToPan;
     [SerializeField] float attackRange;
     [SerializeField] ParticleSystem projectileParticle;
 
-    private Transform targetEnemy;
+    Transform targetEnemy;
+    public TowerBase towerBase;
 
-    private void Update () {
+    void Update () {
         SetTargetEnemy();
         if (targetEnemy) {
             objectToPan.LookAt(targetEnemy);
@@ -21,7 +22,7 @@ public class Tower : MonoBehaviour {
         }
     }
 
-    private void SetTargetEnemy () {
+    void SetTargetEnemy () {
         var sceneEnemies = FindObjectsOfType<EnemyDamage>();
         if (sceneEnemies.Length == 0) { return; }
 
@@ -34,7 +35,7 @@ public class Tower : MonoBehaviour {
         targetEnemy = closestEnemy;
     }
 
-    private Transform GetClosest (Transform transformA, Transform transformB) {
+    Transform GetClosest (Transform transformA, Transform transformB) {
         var distToA = Vector3.Distance(transform.position, transformA.position);
         var distToB = Vector3.Distance(transform.position, transformB.position);
 
@@ -45,7 +46,7 @@ public class Tower : MonoBehaviour {
         }
     }
 
-    private void FireAtEnemy () {
+    void FireAtEnemy () {
         float distanceToEnemy = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
         if (distanceToEnemy <= attackRange) {
             Shoot(true);
@@ -54,7 +55,7 @@ public class Tower : MonoBehaviour {
         }
     }
 
-    private void Shoot (bool isActive) {
+    void Shoot (bool isActive) {
         ParticleSystem.EmissionModule emissionModule = projectileParticle.emission;
         emissionModule.enabled = isActive;
     }

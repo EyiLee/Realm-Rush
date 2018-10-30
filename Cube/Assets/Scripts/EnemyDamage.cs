@@ -5,25 +5,26 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour {
 
-    [SerializeField] private int hitPoints = 10;
-    [SerializeField] private Collider collisionMesh;
-    [SerializeField] private ParticleSystem hitParticlePrefab;
-    [SerializeField] private ParticleSystem deathParticlePrefab;
+    [SerializeField] int hitPoints = 5;
+    [SerializeField] Collider collisionMesh;
+    [SerializeField] ParticleSystem hitParticlePrefab;
+    [SerializeField] ParticleSystem deathParticlePrefab;
 
-    private void OnParticleCollision (GameObject other) {
+    void OnParticleCollision (GameObject other) {
         ProcessHit();
+
         if (hitPoints <= 0) {
             KillEnemy();
         }
     }
 
-    private void ProcessHit () {
+    void ProcessHit () {
         hitPoints = hitPoints - 1;
         hitParticlePrefab.Play();
     }
 
-    private void KillEnemy () {
-        Instantiate(deathParticlePrefab, transform.position, Quaternion.identity, transform);
+    void KillEnemy () {
+        Instantiate(deathParticlePrefab, transform.position, Quaternion.identity, transform.parent);
         Destroy(gameObject);
     }
 }
