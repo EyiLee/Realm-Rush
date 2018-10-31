@@ -12,7 +12,8 @@ public class PathFinder : MonoBehaviour {
         Vector2Int.left
     };
 
-    [SerializeField] Waypoint startWaypoint, endWaypoint;
+    [SerializeField] Waypoint startWaypoint;
+    [SerializeField] Waypoint endWaypoint;
 
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     Queue<Waypoint> queue = new Queue<Waypoint>();
